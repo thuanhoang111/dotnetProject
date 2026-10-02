@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyAppApi.Services;
 using MyAppApi.DTOs;
 using MyAppApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyAppApi.Controller
 {
@@ -36,6 +37,7 @@ namespace MyAppApi.Controller
             return Ok(responseList);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetRiyosyaById(string id)
         {
             var riyosya = await _riyosyaService.GetRiyosyaByIdAsync(id);

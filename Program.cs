@@ -20,7 +20,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();  // Add this line
 
 
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var jwtSettings = builder.Configuration.GetSection("Jwt");
 
 var key = jwtSettings["Key"];
 
@@ -54,6 +54,12 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    db.Database.EnsureCreated();
+}
 
 app.UseAuthentication();
 
